@@ -1,0 +1,46 @@
+{
+  "fontImportURL": "https://use.typekit.net/boj5krl.css",
+  "fontFamily": "t26-carbon, monospace",
+  "fontSize": "20px",
+  "fontWeight": "700",
+  "fontStyle": "normal",
+  "delimiter": "•",
+  "colors": {
+    "primary": "#2f3542",
+    "secondary": "#ffffff"
+  },
+  "links": [
+    {
+      "icon": "twitch",
+      "text": "phrakturemusic",
+      "callsToAction": [
+        "Follow for more music production streams.",
+        "Donations welcome :)."
+      ]
+    },
+    {
+      "icon": "youtube",
+      "text": "phrakture",
+      "callsToAction": [
+        "Subscribe for stream highlights.",
+        "Subscribe for music production tutorials."
+      ]
+    },
+    {
+      "icon": "twitter",
+      "text": "phrakturemusic",
+      "callsToAction": [
+        "Follow for project updates.",
+        "Keep in touch!"
+      ]
+    },
+    {
+      "icon": "instagram",
+      "text": "phrakture",
+      "callsToAction": [
+        "Follow for stream updates.",
+        "Follow for production and performance reels."
+      ]
+    }
+  ]
+}
