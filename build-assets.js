@@ -21,48 +21,55 @@ const icons = {};
   }
 })();
 
-const getCallToActionDisplay = callsToAction => {
+const getLinksMarkup = links => {
   const elements = [];
 
-  callsToAction.forEach((text, index) => {
-    const markup = `
-      <div id="cta-${index}" class="call-to-action">
-        ${text}
-      </div>
-    `;
+  links.forEach(({ icon, text, callsToAction }, linkIndex) => {
+    callsToAction.forEach((callToAction, callsToActionIndex) => {
+      const isFirstItem = (linkIndex + callsToActionIndex) === 0;
 
-    elements.push(markup);
+      const markup = `
+        <div class="badge ${isFirstItem && 'active'}" >
+          <div class="badge-username">
+            ${icons[icon]} ${text}
+          </div>
+          <div class="badge-call-to-action">
+            ${callToAction}
+          </div>
+        </div>
+      `;
+
+      elements.push(markup);
+    })
   });
 
   return elements.join('');
 }
 
-const getLinksMarkup = links => {
-  const elements = [];
+const getBadgeCount = links => {
+  let count = 0;
 
-  links.forEach(({ icon, text, callsToAction }) => {
-    const markup = `
-      <div class="badge">
-        ${icons[icon]} ${text} ${config.delimiter} ${getCallToActionDisplay(callsToAction)}
-      </div>
-    `;
+  links.forEach(({ callsToAction }) => {
+    callsToAction.forEach(() => {
+      count += 1;
+    })
+  })
 
-    elements.push(markup);
-  });
-
-  return elements.join('');
+  return count;
 }
 
 const buildSummary = () => {
   summary = summary
     .replace(/\[FONT_IMPORT_URL\]/gi, config.fontImportURL)
+    .replace(/\[COLORS\]/gi, JSON.stringify(config.colors))
     .replace(/\[FONT_FAMILY\]/gi, config.fontFamily)
-    .replace(/\[FONT_SIZE\]/gi, config.fontSize)
-    .replace(/\[FONT_WEIGHT\]/gi, config.fontWeight)
-    .replace(/\[FONT_STYLE\]/gi, config.fontStyle)
-    .replace(/\[COLOR_PRIMARY\]/gi, config.colors.primary)
-    .replace(/\[COLOR_SECONDARY\]/gi, config.colors.secondary)
     .replace(/\[LINKS\]/gi, getLinksMarkup(config.links))
+    .replace(/\[BADGE_COUNT\]/gi, getBadgeCount(config.links))
+    .replace(/\[ROTATION_TIME_MS\]/gi, config.rotationTimeMs)
+
+  if (config.rotateBadges) {
+    summary = summary.replace(/\[ROTATE_BADGES\]/gi, 'rotateBadges();')
+  }
 
   try {
     writeFileSync('index.html', summary, { encoding: 'utf8' });

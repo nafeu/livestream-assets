@@ -9,30 +9,111 @@
 
     body {
       font-family: [FONT_FAMILY];
-      font-size: [FONT_SIZE];
-      font-weight: [FONT_WEIGHT];
-      font-style: [FONT_STYLE];
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      color: [COLOR_PRIMARY];
     }
 
     .badge {
-      color: [COLOR_PRIMARY];
-      background-color: [COLOR_SECONDARY];
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      font-size: 30px;
+      position: absolute;
+      transition: 300ms ease-in-out all;
+      top: -200px;
+    }
+
+    .badge-username {
+      color: black;
+      background-color: white;
+      fill: black;
+      border: 3px solid black;
+      font-weight: bold;
       display: flex;
       flex-direction: row;
       align-items: center;
       gap: 10px;
-      padding: 5px;
+      padding: 10px 10px;
       margin: 5px;
-      border: 2px solid [COLOR_PRIMARY];
       border-radius: 5px;
+      transition: 300ms ease-in-out all;
+    }
+
+    .badge-call-to-action {
+      color: white;
+      background-color: black;
+      font-size: 0.75em;
+      font-weight: 400;
+      padding: 5px 15px;
+      margin: 5px;
+      border-radius: 5px;
+      transition: 300ms ease-in-out all;
+    }
+
+    .active {
+      top: 10px;
     }
   </style>
 </head>
 <body>
   [LINKS]
+  <script type="text/javascript">
+    let currentBadgePosition = 0;
+    const BADGE_COUNT = [BADGE_COUNT]
+    const COLORS = [COLORS]
+
+    function getRandomItemFromArray(array) {
+      return array[Math.floor(Math.random()*array.length)];
+    }
+
+    function rotateBadges() {
+      const interval = setInterval(() => {
+        (function assignBadgeIds(){
+          const badgeElements = document.querySelectorAll(".badge");
+
+          badgeElements.forEach((badgeElement, index) => {
+            badgeElement.id = `badge-${index}`;
+          })
+        })();
+
+        (function hideAllBadges(){
+          const badgeElements = document.querySelectorAll(".badge");
+
+          badgeElements.forEach(badgeElement => {
+            badgeElement.classList.remove('active');
+          })
+        })();
+
+        (function showCurrentBadge(){
+          const badgeElement = document.getElementById(`badge-${currentBadgePosition}`);
+          const badgeUsernameElement = badgeElement.querySelector('.badge-username');
+          const badgeCallToActionElement = badgeElement.querySelector('.badge-call-to-action');
+
+          const { primary, secondary } = getRandomItemFromArray(COLORS);
+
+          badgeUsernameElement.style.color = primary;
+          badgeUsernameElement.style.backgroundColor = secondary;
+          badgeUsernameElement.style.border = `3px solid ${primary}`;
+          badgeUsernameElement.style.fill = primary;
+
+          badgeCallToActionElement.style.color = secondary;
+          badgeCallToActionElement.style.backgroundColor = primary;
+
+          badgeElement.classList.add('active');
+
+          currentBadgePosition = (currentBadgePosition + 1) % BADGE_COUNT;
+        })();
+
+      }, [ROTATION_TIME_MS]);
+    }
+
+    function handleDomReady() {
+      [ROTATE_BADGES]
+    }
+
+    function onDomReady(main) {
+      document.addEventListener("DOMContentLoaded", main);
+    }
+
+    onDomReady(handleDomReady);
+  </script>
 </body>
 </html>

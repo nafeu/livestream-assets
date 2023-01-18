@@ -1,0 +1,65 @@
+{
+  "fontImportURL": "'https://fonts.googleapis.com/css2?family=Roboto&display=swap'",
+  "fontFamily": "Roboto, sans-serif",
+  "rotationTimeMs": 10000,
+  "rotateBadges": true,
+  "colors": [
+    { "primary": "#263238", "secondary": "#ECEFF1" },
+    { "primary": "#212121", "secondary": "#FAFAFA" },
+    { "primary": "#BF360C", "secondary": "#FBE9E7" },
+    { "primary": "#004D40", "secondary": "#E0F2F1" },
+    { "primary": "#006064", "secondary": "#E0F7FA" },
+    { "primary": "#1A237E", "secondary": "#E8EAF6" },
+    { "primary": "#880E4F", "secondary": "#FCE4EC" },
+    { "primary": "#B71C1C", "secondary": "#FFEBEE" },
+    { "primary": "#2C3E50", "secondary": "#ECF0F1" },
+    { "primary": "#C0392B", "secondary": "#ECF0F1" },
+    { "primary": "#2980B9", "secondary": "#ECF0F1" },
+    { "primary": "#16A085", "secondary": "#ECF0F1" },
+    { "primary": "#F39C12", "secondary": "#ECF0F1" },
+    { "primary": "#130f40", "secondary": "#dff9fb" },
+    { "primary": "#22a6b3", "secondary": "#7ed6df" },
+    { "primary": "#341f97", "secondary": "#c8d6e5" },
+    { "primary": "#ff9f43", "secondary": "#c8d6e5" },
+    { "primary": "#222f3e", "secondary": "#c8d6e5" },
+    { "primary": "#4b6584", "secondary": "#d1d8e0" },
+    { "primary": "#3867d6", "secondary": "#d1d8e0" },
+    { "primary": "#2d98da", "secondary": "#d1d8e0" },
+    { "primary": "#fa8231", "secondary": "#d1d8e0" },
+    { "primary": "#eb3b5a", "secondary": "#d1d8e0" }
+  ],
+  "links": [
+    {
+      "icon": "twitch",
+      "text": "twitch.tv/[YOUR_USERNAME]",
+      "callsToAction": [
+        "Example call to action 1...",
+        "Example call to action 2..."
+      ]
+    },
+    {
+      "icon": "youtube",
+      "text": "youtube.com/[YOUR_USERNAME]",
+      "callsToAction": [
+        "Example call to action 1...",
+        "Example call to action 2..."
+      ]
+    },
+    {
+      "icon": "twitter",
+      "text": "twitter.com/[YOUR_USERNAME]",
+      "callsToAction": [
+        "Example call to action 1...",
+        "Example call to action 2..."
+      ]
+    },
+    {
+      "icon": "instagram",
+      "text": "instagram.com/[YOUR_USERNAME]",
+      "callsToAction": [
+        "Example call to action 1...",
+        "Example call to action 2..."
+      ]
+    }
+  ]
+}
