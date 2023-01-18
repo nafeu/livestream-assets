@@ -1,14 +1,26 @@
-const { readFileSync, writeFileSync, readdirSync } = require("fs");
+const {
+  readFileSync,
+  writeFileSync,
+  readdirSync,
+  existsSync,
+  mkdirSync
+} = require("fs");
 
 let config;
-let summary;
+let rotatingBadges;
 
 const icons = {};
 
+(function createExportDirectory(){
+  if (!existsSync('exports')){
+    mkdirSync('exports');
+  }
+})();
+
 (function loadTemplateConfigs() {
   try {
-    config  = JSON.parse(readFileSync('config.json').toString());
-    summary = readFileSync('templates/summary.txt').toString();
+    config         = JSON.parse(readFileSync('config.json').toString());
+    rotatingBadges = readFileSync('templates/rotating-badges.txt').toString();
 
     readdirSync('icons').forEach(fileName => {
       const iconName = fileName.split('.')[0];
@@ -58,8 +70,8 @@ const getBadgeCount = links => {
   return count;
 }
 
-const buildSummary = () => {
-  summary = summary
+const buildRotatingBadges = () => {
+  rotatingBadges = rotatingBadges
     .replace(/\[FONT_IMPORT_URL\]/gi, config.fontImportURL)
     .replace(/\[COLORS\]/gi, JSON.stringify(config.colors))
     .replace(/\[FONT_FAMILY\]/gi, config.fontFamily)
@@ -68,11 +80,11 @@ const buildSummary = () => {
     .replace(/\[ROTATION_TIME_MS\]/gi, config.rotationTimeMs)
 
   if (config.rotateBadges) {
-    summary = summary.replace(/\[ROTATE_BADGES\]/gi, 'rotateBadges();')
+    rotatingBadges = rotatingBadges.replace(/\[ROTATE_BADGES\]/gi, 'rotateBadges();')
   }
 
   try {
-    writeFileSync('index.html', summary, { encoding: 'utf8' });
+    writeFileSync('exports/rotating-badges.html', rotatingBadges, { encoding: 'utf8' });
   } catch (error) {
     console.log(error.message);
     process.exit(1);
@@ -82,7 +94,7 @@ const buildSummary = () => {
 }
 
 function main() {
-  buildSummary();
+  buildRotatingBadges();
 }
 
 main();

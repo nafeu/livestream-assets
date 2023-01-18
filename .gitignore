@@ -1,2 +1,4 @@
 config.json
 sandbox.css
+exports/
+.DS_Store
