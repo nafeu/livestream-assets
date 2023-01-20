@@ -2,3 +2,4 @@ config.json
 sandbox.css
 exports/
 .DS_Store
+node_modules/

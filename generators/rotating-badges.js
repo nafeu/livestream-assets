@@ -1,6 +1,20 @@
 const icons = require('../utils/icons');
 
-const template = ({ config, badgeMarkup, badgeCount }) => `
+const template = ({
+  config: {
+    generatorOptions: {
+      global: globalOptions,
+      rotatingBadges
+    }
+  },
+  badgeMarkup,
+  badgeCount
+}) => {
+
+const fontImportURL = globalOptions.fontImportURL || rotatingBadges.fontImportURL;
+const fontFamily    = globalOptions.fontFamily || rotatingBadges.fontFamily;
+
+return `
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,10 +22,10 @@ const template = ({ config, badgeMarkup, badgeCount }) => `
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>livestream-assets | Rotating Badges</title>
   <style>
-    @import url("${config.fontImportURL}");
+    @import url("${fontImportURL}");
 
     body {
-      font-family: ${config.fontFamily};
+      font-family: ${fontFamily};
     }
 
     svg {
@@ -66,7 +80,7 @@ const template = ({ config, badgeMarkup, badgeCount }) => `
   <script type="text/javascript">
     let currentBadgePosition = 0;
     const BADGE_COUNT = ${badgeCount}
-    const COLORS = ${JSON.stringify(config.colors)}
+    const COLORS = ${JSON.stringify(rotatingBadges.badgeColors)}
 
     function getRandomItemFromArray(array) {
       return array[Math.floor(Math.random()*array.length)];
@@ -110,11 +124,11 @@ const template = ({ config, badgeMarkup, badgeCount }) => `
           currentBadgePosition = (currentBadgePosition + 1) % BADGE_COUNT;
         })();
 
-      }, ${config.rotationTimeMs});
+      }, ${rotatingBadges.rotationTimeMs});
     }
 
     function handleDomReady() {
-      ${config.rotateBadges ? 'rotateBadges();' : ''}
+      ${rotatingBadges.rotate ? 'rotateBadges();' : ''}
     }
 
     function onDomReady(main) {
@@ -125,14 +139,15 @@ const template = ({ config, badgeMarkup, badgeCount }) => `
   </script>
 </body>
 </html>
-`
+`;
+}
 
 const getBadgeMarkupByLinks = links => {
   const elements = [];
 
-  links.forEach(({ icon, text, callsToAction }, linkIndex) => {
-    callsToAction.forEach((callToAction, callsToActionIndex) => {
-      const isFirstItem = (linkIndex + callsToActionIndex) === 0;
+  links.forEach(({ icon, text, ctas }, linkIndex) => {
+    ctas.forEach((cta, ctasIndex) => {
+      const isFirstItem = (linkIndex + ctasIndex) === 0;
 
       const markup = `
         <div class="badge ${isFirstItem && 'active'}" >
@@ -140,7 +155,7 @@ const getBadgeMarkupByLinks = links => {
             ${icons[icon]} ${text}
           </div>
           <div class="badge-call-to-action">
-            ${callToAction}
+            ${cta}
           </div>
         </div>
       `;
@@ -155,8 +170,8 @@ const getBadgeMarkupByLinks = links => {
 const getBadgeCount = links => {
   let count = 0;
 
-  links.forEach(({ callsToAction }) => {
-    callsToAction.forEach(() => {
+  links.forEach(({ ctas }) => {
+    ctas.forEach(() => {
       count += 1;
     })
   })
@@ -165,8 +180,8 @@ const getBadgeCount = links => {
 }
 
 const buildRotatingBadges = config => {
-  const badgeMarkup = getBadgeMarkupByLinks(config.links);
-  const badgeCount  = getBadgeCount(config.links);
+  const badgeMarkup = getBadgeMarkupByLinks(config.streamerInfo.links);
+  const badgeCount  = getBadgeCount(config.streamerInfo.links);
 
   return template({ config, badgeMarkup, badgeCount });
 }

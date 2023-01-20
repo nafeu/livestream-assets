@@ -4,7 +4,7 @@
   "description": "Generate web-based UI components for livestreaming.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -22,8 +22,8 @@
   "bugs": {
     "url": "https://github.com/nafeu/livestream-assets/issues"
   },
-  "scripts": {
-    "build": "node index.js"
-  },
-  "homepage": "https://github.com/nafeu/livestream-assets#readme"
+  "homepage": "https://github.com/nafeu/livestream-assets#readme",
+  "dependencies": {
+    "color": "^4.2.3"
+  }
 }
