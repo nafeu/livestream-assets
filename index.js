@@ -33,7 +33,7 @@ function main() {
       writeFileSync(`${EXPORT_PATH}/${name}.html`, html, generatorOutputOptions);
     });
   } catch (error) {
-    console.log(error.message);
+    console.log(error);
     process.exit(1);
   }
   console.log(`[ build-assets ] Assets built successfully. Check ${EXPORT_PATH} directory.`);
